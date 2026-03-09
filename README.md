@@ -19,5 +19,5 @@ pip install -r requirements.txt
 
 4. Run the project using 
 ```
-python qt_application.py
+python gui.py
 ```
