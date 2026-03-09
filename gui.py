@@ -34,16 +34,13 @@ class FileConverter(QWidget):
         self.layout.addLayout(self.inputLayout)
         self.layout.addWidget(self.inputArea)
         self.layout.addLayout(self.optionLayout)
-        # self.layout.addWidget(self.button)
-        # self.setLayout(self.layout)
-        # self.button.clicked.connect(self.magic)
         self.setLayout(self.layout)
 
 
     @QtCore.Slot()
     def onFileChoose(self):
         print("choosing a file...")
-        filename,_ = QFileDialog.getOpenFileName(self,("Open File"), "", ("Files(*.csv *.txt )"))
+        filename,_ = QFileDialog.getOpenFileName(self,("Open File"), "", ("Delimited Files(*.csv *.txt )"))
         try:
             with open(filename, 'r', encoding='utf-8') as file:
                 content = file.read()
@@ -59,18 +56,19 @@ class FileConverter(QWidget):
         text = self.inputArea.toPlainText();
         if(text and not text.isspace()):
             self.downloadButton.setEnabled(True)
+        else:
+            self.downloadButton.setEnabled(False)
 
     @QtCore.Slot()
     def onDownload(self):
         print("downloading a file...")
-        filename,_ = QFileDialog.getSaveFileName(self,("Save File"), "untitled.xlsx", ("Excel(*.xlsx)"))
+        filename,_ = QFileDialog.getSaveFileName(self,("Save File"), "untitled.xlsx", ("Excel File(*.xlsx)"))
         # assuming filename ends in xlsx
         seperator = self.delimiter.currentData()
         text = self.inputArea.toPlainText();
         convertTextToXLSX(text,seperator,filename)
         
         
-# if __name__ == "__main__":
 app = QApplication(sys.argv)
 widget = FileConverter()
 widget.resize(800, 600)
